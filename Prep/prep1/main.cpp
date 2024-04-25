@@ -43,11 +43,6 @@ int main(int argc, char **argv)
             CudaPic picDK = CudaPic( l_cv_muj_matDK );
             CudaPic picMT = CudaPic( l_cv_muj_matMT );
 
-            
-
-            l_tmp = pic.m_p_uchar3[l_y * pic.m_size.x + l_x];
-
-            printf("l_tmp = %d %d %d\n", l_tmp.x, l_tmp.y, l_tmp.z);
 
             imshow("Image", l_cv_muj_mat); 
 
@@ -62,10 +57,6 @@ int main(int argc, char **argv)
             cuda_multRGB(pic, picMT);
 
             imshow("ImageMT", l_cv_muj_matMT);
-
-            l_tmp = picMT.m_p_uchar3[l_y * pic.m_size.x + l_x];
-
-            printf("l_tmp = %d %d %d\n", l_tmp.x, l_tmp.y, l_tmp.z);
 
             imwrite("output.png", l_cv_muj_matBW);
             imwrite("outputDK.png", l_cv_muj_matDK);

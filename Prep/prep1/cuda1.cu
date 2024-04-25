@@ -11,17 +11,16 @@ __global__ void kernel_grayscaleCenter(CudaPic t_colorPic, CudaPic t_grayPic) {
     if(x >= t_colorPic.m_size.x) return;
     if(y >= t_colorPic.m_size.y) return;
 
-    uchar3 l_bgr = t_colorPic.m_p_uchar3[y * t_colorPic.m_size.x + x];
+    uchar3 l_bgr = t_colorPic.getData<uchar3>(x, y);
 
     if((x >= 30 && x <= t_colorPic.m_size.x - 30) && (y >= 30 && y <= t_colorPic.m_size.y - 30))
     {
-        t_grayPic.m_p_uchar3[y * t_grayPic.m_size.x + x].x = l_bgr.x * 0.11 + l_bgr.y * 0.59 + l_bgr.z * 0.3;
-        t_grayPic.m_p_uchar3[y * t_grayPic.m_size.x + x].y = l_bgr.x * 0.11 + l_bgr.y * 0.59 + l_bgr.z * 0.3;
-        t_grayPic.m_p_uchar3[y * t_grayPic.m_size.x + x].z = l_bgr.x * 0.11 + l_bgr.y * 0.59 + l_bgr.z * 0.3;   
+        t_grayPic.setData<uchar3>(x, y, make_uchar3(l_bgr.x * 0.11 + l_bgr.y * 0.59 + l_bgr.z * 0.3,
+                                                    l_bgr.x * 0.11 + l_bgr.y * 0.59 + l_bgr.z * 0.3,
+                                                    l_bgr.x * 0.11 + l_bgr.y * 0.59 + l_bgr.z * 0.3));
     }
     else
-        t_grayPic.m_p_uchar3[y * t_grayPic.m_size.x + x] = l_bgr;
-
+        t_grayPic.setData<uchar3>(x, y, l_bgr);
     
 }
 
@@ -32,16 +31,14 @@ __global__ void kernel_halveRGB(CudaPic t_colorPic, CudaPic t_darkPic) {
     if(x >= t_colorPic.m_size.x) return;
     if(y >= t_colorPic.m_size.y) return;
 
-    uchar3 l_bgr = t_colorPic.m_p_uchar3[y * t_colorPic.m_size.x + x];
+    uchar3 l_bgr = t_colorPic.getData<uchar3>(x, y);
 
     if((x - t_colorPic.m_size.x/2)*(x - t_colorPic.m_size.x/2) + (y - t_colorPic.m_size.y/2)*(y - t_colorPic.m_size.y/2) <= 50*50)
     {
-        t_darkPic.m_p_uchar3[y * t_darkPic.m_size.x + x].x = l_bgr.x / 2;
-        t_darkPic.m_p_uchar3[y * t_darkPic.m_size.x + x].y = l_bgr.y / 2;
-        t_darkPic.m_p_uchar3[y * t_darkPic.m_size.x + x].z = l_bgr.z / 2;
+        t_darkPic.setData<uchar3>(x, y, make_uchar3(l_bgr.x / 2, l_bgr.y / 2, l_bgr.z / 2));
     }
     else
-        t_darkPic.m_p_uchar3[y * t_darkPic.m_size.x + x] = l_bgr;
+        t_darkPic.setData<uchar3>(x, y, l_bgr);
 
 
 }
@@ -53,7 +50,7 @@ __global__ void kernel_multRGB(CudaPic t_colorPic, CudaPic t_multPic) {
     if(x >= t_colorPic.m_size.x) return;
     if(y >= t_colorPic.m_size.y) return;
 
-    uchar3 l_bgr = t_colorPic.m_p_uchar3[y * t_colorPic.m_size.x + x];
+    uchar3 l_bgr = t_colorPic.getData<uchar3>(x, y);
     uchar3 l_bgr2 = l_bgr;
 
     if (l_bgr.x * 2 > 255)
@@ -71,7 +68,7 @@ __global__ void kernel_multRGB(CudaPic t_colorPic, CudaPic t_multPic) {
     else
         l_bgr2.z = l_bgr.z * 2;
 
-    t_multPic.m_p_uchar3[y * t_multPic.m_size.x + x] = l_bgr2;
+    t_multPic.setData<uchar3>(x, y, l_bgr2);
         
 }
 
