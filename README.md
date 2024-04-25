@@ -10,10 +10,10 @@ Preperation and laboratories for CUDA programming
 
 ## Structure
 
-| Folder        | Description                                |
-|---------------|--------------------------------------------|
-| Preperation 1 | Simple image modification                  |
-| Preperation 2 | Simple grayscale `uchar1` image generation |
+| Folder                                                                    | Description                                |
+|---------------------------------------------------------------------------|--------------------------------------------|
+| [Preperation 1](https://github.com/Dexerity/cuda/blob/master/Prep/prep1/) | Simple image modification                  |
+| [Preperation 2](https://github.com/Dexerity/cuda/blob/master/Prep/prep2/) | Simple grayscale `uchar1` image generation |
 
 
 ## Functions
