@@ -70,25 +70,6 @@ __global__ void kernel_checkerboard(CudaPic l_cv_in_pic)
     l_cv_in_pic.setData<uchar1>(x, y, {l_bw});
 }
 
-__global__ void kernel_color_checkerboard(CudaPic l_cv_in_pic)
-{
-    int x = blockIdx.x * blockDim.x + threadIdx.x;
-    int y = blockIdx.y * blockDim.y + threadIdx.y;
-
-    if(x >= l_cv_in_pic.m_size.x) return;
-    if(y >= l_cv_in_pic.m_size.y) return;
-
-    unsigned char l_val = __sinf(x / 20.0f) * 127 + 128;
-
-    if((blockIdx.x + blockIdx.y) & 1) {
-        
-        l_cv_in_pic.setData<uchar3>(x, y, {l_val, l_val, l_val});
-    } else {
-        l_cv_in_pic.setData<uchar3>(x, y, {255, 255, 255});
-    }
-
-}
-
 void cuda_clear(CudaPic l_cv_in_pic)
 {
     cudaError_t l_cuda_err;
@@ -181,26 +162,6 @@ void cuda_checkerboard(CudaPic l_cv_in_pic)
     dim3 l_threads(l_block_size, l_block_size);
 
     kernel_checkerboard<<<l_blocks, l_threads>>>(l_cv_in_pic);
-
-    if((l_cuda_err = cudaGetLastError()) != cudaSuccess) {
-        printf("CUDA error [%d]: %s\n", __LINE__, cudaGetErrorString(l_cuda_err));
-    }
-
-    cudaDeviceSynchronize();
-}
-
-void cuda_color_checkerboard(CudaPic l_cv_in_pic)
-{
-    cudaError_t l_cuda_err;
-
-    int l_block_size = 32;
-
-    dim3 l_blocks((l_cv_in_pic.m_size.x + l_block_size - 1) / l_block_size,
-                  (l_cv_in_pic.m_size.y + l_block_size - 1) / l_block_size);
-
-    dim3 l_threads(l_block_size, l_block_size);
-
-    kernel_color_checkerboard<<<l_blocks, l_threads>>>(l_cv_in_pic);
 
     if((l_cuda_err = cudaGetLastError()) != cudaSuccess) {
         printf("CUDA error [%d]: %s\n", __LINE__, cudaGetErrorString(l_cuda_err));

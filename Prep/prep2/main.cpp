@@ -13,7 +13,6 @@ void cuda_BW_gradientCircle(CudaPic l_cv_in_pic);
 void cuda_BW_gradientHor(CudaPic l_cv_in_pic);
 void cuda_BW_gradientVer(CudaPic l_cv_in_pic);
 void cuda_checkerboard(CudaPic l_cv_in_pic);
-void cuda_color_checkerboard(CudaPic l_cv_in_pic);
 
 int main(int argc, char **argv)
 {
@@ -50,12 +49,6 @@ int main(int argc, char **argv)
     waitKey(0);
     imwrite("checkerboard.jpg", l_cv_empty_mat);
     cuda_clear(pic);
-
-    cuda_color_checkerboard(pic2);
-    imshow("Image", l_cv_empty_mat2);
-    waitKey(0);
-    imwrite("color_checkerboard.jpg", l_cv_empty_mat2);
-    cuda_clear(pic2);
 
     return 0;
 }
