@@ -14,6 +14,8 @@ Preperation and laboratories for CUDA programming
 |---------------------------------------------------------------------------|--------------------------------------------|
 | [Preperation 1](https://github.com/Dexerity/cuda/blob/master/Prep/prep1/) | Simple image modification                  |
 | [Preperation 2](https://github.com/Dexerity/cuda/blob/master/Prep/prep2/) | Simple grayscale `uchar1` image generation |
+| [Preperation 3](https://github.com/Dexerity/cuda/blob/master/Prep/prep3/) | Rainbow + alpha gradient `uchar4`               |
+| [Preperation 4](https://github.com/Dexerity/cuda/blob/master/Prep/prep4/) | More simple image modifications |
 
 
 ## Functions
@@ -47,4 +49,25 @@ Preperation and laboratories for CUDA programming
 | `void cuda_BW_gradientVer(CudaPic l_cv_in_pic)`                   | Host function to apply a vertical black and white gradient using CUDA.                |
 | `void cuda_checkerboard(CudaPic l_cv_in_pic)`                     | Host function to create a black and white checkerboard pattern using CUDA.            |
 
+</details>
+
+<details closed><summary>Preperation 3</summary>
+
+| Function                                                                          | Description                                                                                                           |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `__global__ void kernel_clear(CudaPic l_cv_in_pic)`                               | Clears an image by setting all pixel values to 0. Each thread handles one pixel of the image.                         |
+| `__global__ void kernel_rainbowGradient(CudaPic l_cv_in_pic)`                     | Applies a rainbow gradient to an image. Each thread handles one pixel of the image.                                   |
+| `void cuda_clear(CudaPic l_cv_in_pic)`                                            | Host function that launches the `kernel_clear` CUDA kernel to clear an image.                                         |
+| `void cuda_rainbowGradient(CudaPic l_cv_in_pic)`                                  | Host function that launches the `kernel_rainbowGradient` CUDA kernel to apply a rainbow gradient to an image.         |
+
+</details>
+
+<details closed><summary>Preperation 4</summary>
+
+| Function                                                                          | Description                                                                                                           |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `__global__ void kernel_flip(CudaPic inPic, CudaPic outPic, int dir)`             | Flips an image horizontally or vertically based on the `dir` parameter. Each thread handles one pixel of the image.   |
+| `__global__ void kernel_color_remove(CudaPic inPic, CudaPic outPic, uchar3 color, double amount)` | Removes a certain amount of a specific color from an image. Each thread handles one pixel of the image. |
+| `void cuda_flip(CudaPic inPic, CudaPic outPic, int dir)`                          | Host function that launches the `kernel_flip` CUDA kernel to flip an image horizontally or vertically.                |
+| `void cuda_color_remove(CudaPic inPic, CudaPic outPic, uchar3 color, double amount)` | Host function that launches the `kernel_color_remove` CUDA kernel to remove a certain amount of a specific color from an image. |
 </details>

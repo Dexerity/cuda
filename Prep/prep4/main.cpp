@@ -20,23 +20,14 @@ int main(int argc, char **argv)
 
     // Create empty images of the same size
     Mat mat1 = imread(argv[1], IMREAD_COLOR);
+    Mat mat1copy(mat1.size(), CV_8UC3);
+    Mat mat1copy2(mat1.size(), CV_8UC3);
+    Mat mat1edit(mat1.size(), CV_8UC3);
+    Mat mat1edit2(mat1.size(), CV_8UC3);
+    Mat mat1edit3(mat1.size(), CV_8UC3);
+    Mat mat1edit4(mat1.size(), CV_8UC3);
 
-    int width = mat1.cols;
-    int height = mat1.rows;
-
-    Mat mat1copy(height, width, CV_8UC3);
-    Mat mat1copy2(height, width, CV_8UC3);
-    Mat mat1edit(height, width, CV_8UC3);
-    Mat mat1edit2(height, width, CV_8UC3);
-    Mat mat1edit3(height, width, CV_8UC3);
-    Mat mat1edit4(height, width, CV_8UC3);
-
-    // Mat mat1copy(mat1.size(), CV_8UC3);
-    // Mat mat1copy2(mat1copy.size(), CV_8UC3);
-    // Mat mat1edit(mat1copy.size(), CV_8UC3);
-    // Mat mat1edit2(mat1copy.size(), CV_8UC3);
-    // Mat mat1edit3(mat1copy.size(), CV_8UC3);
-    // Mat mat1edit4(mat1copy.size(), CV_8UC3);
+    printf("%d, %d", mat1.rows, mat1.cols);
 
     CudaPic pic = CudaPic(mat1);
     CudaPic picCopy = CudaPic(mat1copy);
@@ -46,7 +37,7 @@ int main(int argc, char **argv)
     CudaPic picEdit3 = CudaPic(mat1edit3);
     CudaPic picEdit4 = CudaPic(mat1edit4);
 
-    uchar3 color = make_uchar3(0, 255, 0);
+    uchar3 color = make_uchar3(0, 255, 0);  
 
     cuda_flip(pic, picCopy, 1);
     imshow("Vertical", mat1copy);
@@ -62,10 +53,9 @@ int main(int argc, char **argv)
 
     cuda_color_remove(pic, picEdit3, color, 0.50);
     imshow("50% remove", mat1edit3);
-    
+
     cuda_color_remove(pic, picEdit4, color, 1);
     imshow("100% remove", mat1edit4);
-    
 
     waitKey(0);
 

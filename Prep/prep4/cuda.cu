@@ -20,7 +20,7 @@ __global__ void kernel_flip(CudaPic inPic, CudaPic outPic, int dir)
     if(dir == 1)
     {
         int halfX = inPic.m_size.x / 2;
-        if(x <= halfX)
+        if(x < halfX)
             outPic.setData<uchar3>(x + halfX, y, tmp);
         else
             outPic.setData<uchar3>(x - halfX, y, tmp);
@@ -28,7 +28,7 @@ __global__ void kernel_flip(CudaPic inPic, CudaPic outPic, int dir)
     else if(dir == 2)
     {
         int halfY = inPic.m_size.y / 2;
-        if(y <= halfY)
+        if(y < halfY)
             outPic.setData<uchar3>(x, y + halfY, tmp);
         else
             outPic.setData<uchar3>(x, y - halfY, tmp);
