@@ -47,13 +47,9 @@ __global__ void kernel_color_remove(CudaPic inPic, CudaPic outPic, uchar3 color,
     uchar3 tmp = inPic.getData<uchar3>(x, y);
     uchar3 tmp2 = tmp;
 
-
-
-    tmp2.x = (uchar)(tmp.x - color.x * (1 - amount));
-    tmp2.y = (uchar)(tmp.y - color.y * (1 - amount));
-    tmp2.z = (uchar)(tmp.z - color.z * (1 - amount));
-
-    printf("Tmp: %d %d %d  =  tmp2: %d %d %d (amount: %f) (color: %d %d %d)\n", tmp.x, tmp.y, tmp.z, tmp2.x, tmp2.y, tmp2.z, amount, color.x, color.y, color.z);
+    tmp2.x = (uchar)(tmp.x - color.x * amount);
+    tmp2.y = (uchar)(tmp.y - color.y * amount);
+    tmp2.z = (uchar)(tmp.z - color.z * amount);
     
 
     outPic.setData<uchar3>(x, y, tmp2);

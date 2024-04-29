@@ -37,26 +37,26 @@ int main(int argc, char **argv)
     CudaPic picEdit3 = CudaPic(mat1edit3);
     CudaPic picEdit4 = CudaPic(mat1edit4);
 
-    uchar3 color = make_uchar3(0, 255, 0);  
+    uchar3 color = make_uchar3(255, 255, 0);  
 
     cuda_flip(pic, picCopy, 1);
     imshow("Vertical", mat1copy);
 
-    cuda_flip(pic, picCopy2, 2);
-    imshow("Horizontal", mat1copy2);
+    // cuda_flip(pic, picCopy2, 2);
+    // imshow("Horizontal", mat1copy2);
 
-    cuda_color_remove(pic, picEdit, color, 0);
-    imshow("0% remove", mat1edit);
+    // cuda_color_remove(pic, picEdit, color, 0);
+    // imshow("0% remove", mat1edit);
 
-    cuda_color_remove(pic, picEdit2, color, 0.25);
-    imshow("25% remove", mat1edit2);
+    // cuda_color_remove(pic, picEdit2, color, 0.25);
+    // imshow("25% remove", mat1edit2);
 
-    cuda_color_remove(pic, picEdit3, color, 0.50);
-    imshow("50% remove", mat1edit3);
+    // cuda_color_remove(pic, picEdit3, color, 0.50);
+    // imshow("50% remove", mat1edit3);
 
-    cuda_color_remove(pic, picEdit4, color, 1);
-    namedWindow("100% remove", WINDOW_NORMAL);
-    imshow("100% remove", mat1edit4);
+    // cuda_color_remove(pic, picEdit4, color, 1);
+    // namedWindow("100% remove", WINDOW_NORMAL);
+    // imshow("100% remove", mat1edit4);
 
     waitKey(0);
 
