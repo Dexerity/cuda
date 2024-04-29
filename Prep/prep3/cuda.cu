@@ -31,16 +31,16 @@ __global__ void kernel_rainbowGradient(CudaPic l_cv_in_pic)
     if(y >= l_cv_in_pic.m_size.y) return;
 
     uchar3 colors[7] = {
-        {255, 0, 0},
-        {255, 255, 0},
-        {0, 255, 0},
-        {0, 255, 255},
         {0, 0, 255},
+        {0, 255, 255},
+        {0, 255, 0},
+        {255, 255, 0},
+        {255, 0, 0},
         {255, 0, 255},
-        {255, 0, 0,}
+        {0, 0, 255}
     };
 
-    int colorIndex = x / (l_cv_in_pic.m_size.x / 6);
+    int colorIndex = x / ((double)l_cv_in_pic.m_size.x / 6);
     double colorWeight = (double)x / ((double)l_cv_in_pic.m_size.x / 6.0) - colorIndex;
     double Yalpha = (double)y / (double)l_cv_in_pic.m_size.y;
     
@@ -56,9 +56,9 @@ __global__ void kernel_rainbowGradient(CudaPic l_cv_in_pic)
 
     l_cv_in_pic.setData<uchar4>(x, y, color);
 
-    if(x == 1)
+    if(y == 1)
     {
-        printf("Color: %d, %d, %d, %d:  %d,%d   %f\n", color.x, color.y, color.z, color.w, x, y, Yalpha);
+        printf("Color: %d, %d, %d, %d:  %d,%d   %f  (%d, %d)\n", color.x, color.y, color.z, color.w, x, y, Yalpha, l_cv_in_pic.m_size.x, l_cv_in_pic.m_size.y);
     }
 }
 

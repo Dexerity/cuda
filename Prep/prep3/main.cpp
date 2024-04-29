@@ -27,7 +27,10 @@ int main(int argc, char **argv)
     CudaPic pic2 = CudaPic(l_cv_empty_mat2);
 
     cuda_rainbowGradient(pic2);
+    imshow("Rainbow Gradient", l_cv_empty_mat2);
     imwrite("rainbowGradient.png", l_cv_empty_mat2);
+
+    waitKey(0);
 
     return 0;
 }

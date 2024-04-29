@@ -55,6 +55,7 @@ int main(int argc, char **argv)
     imshow("50% remove", mat1edit3);
 
     cuda_color_remove(pic, picEdit4, color, 1);
+    namedWindow("100% remove", WINDOW_NORMAL);
     imshow("100% remove", mat1edit4);
 
     waitKey(0);
