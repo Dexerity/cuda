@@ -21,16 +21,16 @@ __global__ void kernel_sep_rotate(CudaPic inPic, CudaPic outPic)
     if(x < halfX)
     {
         if(y < halfY)
-            outPic.setData<uchar3>(y, halfY - x, inPic.getData<uchar3>(x, y));
+            outPic.setData<uchar3>(y, halfX - x, inPic.getData<uchar3>(x, y));
         else
-            outPic.setData<uchar3>(y - halfX, (halfY - x) + halfY, inPic.getData<uchar3>(x, y));
+            outPic.setData<uchar3>(y - halfY, (halfX - x) + halfX, inPic.getData<uchar3>(x, y));
     }
     else
     {
         if(y < halfY)
-            outPic.setData<uchar3>(y + halfX, halfY + (halfX - x), inPic.getData<uchar3>(x, y));
+            outPic.setData<uchar3>(y + halfY, halfX + (halfX - x), inPic.getData<uchar3>(x, y));
         else
-            outPic.setData<uchar3>(y, inPic.m_size.y - x + halfY, inPic.getData<uchar3>(x, y));
+            outPic.setData<uchar3>(y, inPic.m_size.y - x + halfX, inPic.getData<uchar3>(x, y));
     }
 }
 
