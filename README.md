@@ -12,10 +12,12 @@ Preperation and laboratories for CUDA programming
 
 | Folder                                                                    | Description                                |
 |---------------------------------------------------------------------------|--------------------------------------------|
+| [Cellular Automata](https://github.com/Dexerity/cuda/blob/master/Prep/Cellular_Automata/) | Cellular automata simulation |
 | [Preperation 1](https://github.com/Dexerity/cuda/blob/master/Prep/prep1/) | Simple image modification                  |
 | [Preperation 2](https://github.com/Dexerity/cuda/blob/master/Prep/prep2/) | Simple grayscale `uchar1` image generation |
 | [Preperation 3](https://github.com/Dexerity/cuda/blob/master/Prep/prep3/) | Rainbow + alpha gradient `uchar4`               |
 | [Preperation 4](https://github.com/Dexerity/cuda/blob/master/Prep/prep4/) | More simple image modifications |
+| [Preperation 5](https://github.com/Dexerity/cuda/blob/master/Prep/prep5/) | Image quadrant modification |
 
 
 ## Functions
@@ -71,3 +73,14 @@ Preperation and laboratories for CUDA programming
 | `void cuda_flip(CudaPic inPic, CudaPic outPic, int dir)`                          | Host function that launches the `kernel_flip` CUDA kernel to flip an image horizontally or vertically.                |
 | `void cuda_color_remove(CudaPic inPic, CudaPic outPic, uchar3 color, double amount)` | Host function that launches the `kernel_color_remove` CUDA kernel to remove a certain amount of a specific color from an image. |
 </details>
+
+<details closed><summary>Preperation 5</summary>
+
+| Function                                                                          | Description                                                                                                           |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `__global__ void kernel_sep_rotate(CudaPic inPic, CudaPic outPic)`                | Rotates an image in four different directions based on the quadrant. Each thread handles one pixel of the image.      |
+| `__global__ void kernel_remove_color_quadrant(CudaPic inPic, CudaPic outPic)`     | Removes a specific color channel from each quadrant of an image. Each thread handles one pixel of the image.          |
+| `void cuda_sep_rotate(CudaPic inPic, CudaPic outPic)`                             | Host function that launches the `kernel_sep_rotate` CUDA kernel to rotate an image.                                   |
+| `void cuda_remove_color_quadrant(CudaPic inPic, CudaPic outPic)`                  | Host function that launches the `kernel_remove_color_quadrant` CUDA kernel to remove a specific color channel from each quadrant of an image. |
+</details>
+
