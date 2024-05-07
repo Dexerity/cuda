@@ -28,7 +28,12 @@ class CudaPic
     {
         this->m_size.x = t_cv_mat.size().width;
         this->m_size.y = t_cv_mat.size().height;
-        this->m_p_uchar3 = (uchar3 *)t_cv_mat.data;
+        if ( t_cv_mat.channels() == 1 )
+            this->m_p_uchar1 = (uchar1 *)t_cv_mat.data;
+        else if ( t_cv_mat.channels() == 3 )
+            this->m_p_uchar3 = (uchar3 *)t_cv_mat.data;
+        else
+            this->m_p_uchar4 = (uchar4 *)t_cv_mat.data;
     }
     
     template <typename T>
