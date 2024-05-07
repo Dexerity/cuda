@@ -23,7 +23,7 @@ Preperation and laboratories for CUDA programming
 ## Functions
 
 
-<details closed><summary>Preperation 1</summary>
+<details closed><summary>Preperation 1</summary>v
 
 | Function                                                                          | Description                                                                                                           |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
