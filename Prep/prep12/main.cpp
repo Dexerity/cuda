@@ -39,7 +39,7 @@ int main(int argc, char **argv)
     int state = 0;
     int yP = 0;
 
-    while(yP < inPic.m_size.y)
+    while(yP < inPic.m_size.x)
     {
         //turn state into string
         std::string stateStr = std::to_string(state);
