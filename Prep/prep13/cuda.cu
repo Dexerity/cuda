@@ -4,7 +4,7 @@
 
 #include "cuda_img.h"
 
-__global__ void kernel_insert(CudaPic picBG, CudaPic picFG, CudaPic res)
+__global__ void kernel_insert(CudaPic picBG, CudaPic picFG, CudaPic res, uchar3 tint)
 {
     int x = blockIdx.x * blockDim.x + threadIdx.x;
     int y = blockIdx.y * blockDim.y + threadIdx.y;
@@ -16,7 +16,16 @@ __global__ void kernel_insert(CudaPic picBG, CudaPic picFG, CudaPic res)
     uchar4 l_foreground = picFG.getData<uchar4>(x, y);
 
     if(l_background.w == 0) {
-        res.setData<uchar4>(x, y, l_foreground);
+        uchar3 l_color = make_uchar3(l_foreground.x, l_foreground.y, l_foreground.z);
+        uchar3 l_tint = tint;
+
+        uchar3 l_result = make_uchar3(
+            (l_color.x * l_tint.x) / 255,
+            (l_color.y * l_tint.y) / 255,
+            (l_color.z * l_tint.z) / 255
+        );
+
+        res.setData<uchar4>(x, y, make_uchar4(l_result.x, l_result.y, l_result.z, 255));
     } else {
         res.setData<uchar4>(x, y, l_background);
     }
@@ -34,7 +43,7 @@ __global__ void kernel_upChannel(CudaPic inPic, CudaPic outPic)
     outPic.setData<uchar4>(x, y, make_uchar4(l_color.x, l_color.y, l_color.z, 255));
 }
 
-void cuda_insert(CudaPic picBG, CudaPic picFG, CudaPic res)
+void cuda_insert(CudaPic picBG, CudaPic picFG, CudaPic res, uchar3 tint)
 {
     cudaError_t l_cerr;
 
@@ -43,7 +52,7 @@ void cuda_insert(CudaPic picBG, CudaPic picFG, CudaPic res)
     dim3 l_blocks((picBG.m_size.x + block_size - 1) / block_size, (picBG.m_size.y + block_size - 1) / block_size);
     dim3 l_threads(block_size, block_size);
 
-    kernel_insert<<<l_blocks, l_threads>>>(picBG, picFG, res);
+    kernel_insert<<<l_blocks, l_threads>>>(picBG, picFG, res, tint);
 
     if((l_cerr = cudaGetLastError()) != cudaSuccess) {
         printf("CUDA error [%d]: %s\n", __LINE__, cudaGetErrorString(l_cerr));
